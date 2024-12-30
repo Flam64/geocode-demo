@@ -3,40 +3,42 @@ import { useEffect, useState } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 
 export default function LocationUser({ selectedItem }) {
-	const defaultPosition = [48.856, 2.3522];
+  const defaultPosition = [48.856, 2.3522];
 
-	const [position, setPosition] = useState(defaultPosition);
+  const [position, setPosition] = useState(defaultPosition);
 
-	const map = useMap();
-	// Default position
-	/* 	let lat = 48.856;
-	let lng = 2.3522; */
+  const map = useMap();
+  // Default position
+  let latitude = 48.856;
+  let longitude = 2.3522;
 
-	// GPS or automatic position of the web browser
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		map.locate({
-			setView: true,
-			maxZoom: 13,
-		});
+  // GPS or automatic position of the web browser
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    map.locate({
+      setView: true,
+      maxZoom: 13,
+    });
 
-		map.on("locationfound", (e) => {
-			setPosition(e.latlng);
-		});
-	}, []);
+    map.on("locationfound", (e) => {
+      //setPosition(e.latlng);
+      latitude = e.latlng.lat;
+      longitude = e.latlng.lng;
+    });
+    console.info(latitude);
+    console.log(longitude);
+  }, []);
 
-	if (selectedItem.length !== 0) {
-		const defaultPosition = [
-			selectedItem.coordinates[1],
-			selectedItem.coordinates[0],
-		];
-		//defaultPosition.push(selectedItem.coordinates[0]);
-		map.flyTo([selectedItem.coordinates[1], selectedItem.coordinates[0]], 14);
-	}
+  if (selectedItem.length !== 0) {
+    latitude = selectedItem.coordinates[1];
+    longitude = selectedItem.coordinates[0];
+    map.flyTo([latitude, longitude], 14);
+    //setPosition(());
+  }
 
-	return (
-		<Marker position={position}>
-			<Popup>You are here</Popup>
-		</Marker>
-	);
+  return (
+    <Marker position={[latitude, longitude]}>
+      <Popup>You are here</Popup>
+    </Marker>
+  );
 }
