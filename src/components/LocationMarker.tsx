@@ -10,7 +10,6 @@ export default function LocationMarker() {
 		locationfound(e) {
 			setPosition(e.latlng);
 			map.flyTo(e.latlng, map.getZoom());
-			console.log(e.latlng);
 		},
 	});
 	console.log(position);

@@ -8,7 +8,9 @@ export default function SearchBar() {
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<searchApi[] | null>([]);
 	const [searchDone, setSearchDone] = useState(false);
-	const [selectedItem, setSelectedItem] = useState<searchApi[] | null>([]);
+	const [selectedPosition, setSelectedPosition] = useState<searchApi[] | null>(
+		[],
+	);
 
 	const handleKeyUp = (event: { key: string }) => {
 		event.key === "Enter";
@@ -60,9 +62,8 @@ export default function SearchBar() {
 		setQuery(element.properties.label);
 		setResults([]);
 		setSearchDone(true);
-		setSelectedItem(element.geometry);
+		setSelectedPosition(element.geometry);
 	};
-	console.log(selectedItem);
 	return (
 		<>
 			<div className="search-bar">
@@ -86,7 +87,7 @@ export default function SearchBar() {
 						))}
 				</ul>
 			</div>
-			<Maps selectedItem={selectedItem} />
+			<Maps selectedPosition={selectedPosition} />
 			{/* {searchDone && <LocationUser coordonnees={selectedItem.geometry.coordinates} />} coordonnees={selectedItem.geometry.coordinates} */}
 		</>
 	);

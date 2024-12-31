@@ -1,44 +1,49 @@
-import { LatLng, latLng } from "leaflet";
 import { useEffect, useState } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 
-export default function LocationUser({ selectedItem }) {
-  const defaultPosition = [48.856, 2.3522];
+type coordinatesType = {
+	latitude: number;
+	longitude: number;
+};
 
-  const [position, setPosition] = useState(defaultPosition);
+export default function LocationUser({ selectedPosition }) {
+	const defaultPosition = { latitude: 48.856, longitude: 2.3522 };
 
-  const map = useMap();
-  // Default position
-  let latitude = 48.856;
-  let longitude = 2.3522;
+	const [position, setPosition] = useState<coordinatesType>(defaultPosition);
 
-  // GPS or automatic position of the web browser
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    map.locate({
-      setView: true,
-      maxZoom: 13,
-    });
+	const map = useMap();
+	// Default position
+	let latitude = 48.856;
+	let longitude = 2.3522;
 
-    map.on("locationfound", (e) => {
-      //setPosition(e.latlng);
-      latitude = e.latlng.lat;
-      longitude = e.latlng.lng;
-    });
-    console.info(latitude);
-    console.log(longitude);
-  }, []);
+	// GPS or automatic position of the web browser
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		map.locate({
+			setView: true,
+			maxZoom: 13,
+		});
 
-  if (selectedItem.length !== 0) {
-    latitude = selectedItem.coordinates[1];
-    longitude = selectedItem.coordinates[0];
-    map.flyTo([latitude, longitude], 14);
-    //setPosition(());
-  }
+		map.on("locationfound", (e) => {
+			setPosition(e.latlng);
+		});
+		console.info(latitude);
+		console.log(longitude);
+	}, []);
 
-  return (
-    <Marker position={[latitude, longitude]}>
-      <Popup>You are here</Popup>
-    </Marker>
-  );
+	if (selectedPosition.length !== 0) {
+		latitude = selectedPosition.coordinates[1];
+		longitude = selectedPosition.coordinates[0];
+		map.flyTo([latitude, longitude], 14);
+		const newPosition = defaultPosition;
+		newPosition.latitude = latitude;
+		newPosition.longitude = longitude;
+		setPosition(newPosition);
+	}
+	//[latitude, longitude]
+	return (
+		<Marker position={position}>
+			<Popup>You are here</Popup>
+		</Marker>
+	);
 }

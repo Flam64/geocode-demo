@@ -26,7 +26,7 @@ const markers = [
 
 // [48.8566, 2.3522]
 
-export default function Maps({ selectedItem }) {
+export default function Maps({ selectedPosition }) {
 	/* 	console.log(selectedItem.coordinates[0]);
 	console.log(selectedItem.coordinates[1]); */
 
@@ -63,7 +63,7 @@ export default function Maps({ selectedItem }) {
 						</Popup>
 					</Marker> */}
 				</MarkerClusterGroup>
-				<LocationUser selectedItem={selectedItem} />
+				<LocationUser selectedPosition={selectedPosition} />
 			</MapContainer>
 		</>
 	);
