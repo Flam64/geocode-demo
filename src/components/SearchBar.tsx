@@ -71,7 +71,7 @@ export default function SearchBar() {
 					type="search"
 					value={query}
 					onChange={handleSearch}
-					placeholder="Rechercher..."
+					placeholder="Rechercher un lieu..."
 				/>
 
 				<ul>
@@ -88,7 +88,6 @@ export default function SearchBar() {
 				</ul>
 			</div>
 			<Maps selectedPosition={selectedPosition} />
-			{/* {searchDone && <LocationUser coordonnees={selectedItem.geometry.coordinates} />} coordonnees={selectedItem.geometry.coordinates} */}
 		</>
 	);
 }

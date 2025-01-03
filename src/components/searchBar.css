@@ -1,10 +1,11 @@
 .search-bar {
-    width: 500px;
-    margin: 20px auto;
+    width: 280px;
+    margin: 10px auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .search-bar input[type="search"] {
@@ -21,12 +22,23 @@
     list-style: none;
     padding: 0;
     margin: 0;
+
+    position: absolute;
 }
 
 .search-bar li {
     padding: 10px;
+    width: 260px;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    background-color: antiquewhite;
+
+}
+
+.search-bar li:hover {
+    background-color: aqua;
 }
 
 .search-bar li:last-child {
