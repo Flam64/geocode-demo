@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Marker, Popup, useMap, CircleMarker, Tooltip } from "react-leaflet";
+import { Marker, useMap, CircleMarker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 
 export default function LocationUser({ selectedPosition }) {

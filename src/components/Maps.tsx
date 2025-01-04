@@ -12,6 +12,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 
 //import { Icon, divIcon, point } from "leaflet";
 import LocationUser from "./LocationUser";
+import Routing from "./Routing";
 
 // create custom icon
 
@@ -34,8 +35,11 @@ const markers = [
 // [48.8566, 2.3522]
 
 export default function Maps({ selectedPosition }) {
-	/* 	console.log(selectedItem.coordinates[0]);
-	console.log(selectedItem.coordinates[1]); */
+	const startPoint = {
+		lat: 48.8566,
+		lng: 2.3522,
+	}; // Example: Mumbai
+	const endPoint = { lat: 48.86, lng: 2.3822 }; // Example: Pune
 
 	return (
 		<>
@@ -71,12 +75,13 @@ export default function Maps({ selectedPosition }) {
 							</Marker> */}
 					</MarkerClusterGroup>
 
-					<LayersControl.Overlay name="Ma position">
+					<LayersControl.Overlay name="Ma position" checked={true}>
 						<LayerGroup>
 							<LocationUser selectedPosition={selectedPosition} />
 						</LayerGroup>
 					</LayersControl.Overlay>
 				</LayersControl>
+				<Routing start={startPoint} end={endPoint} />
 			</MapContainer>
 		</>
 	);
