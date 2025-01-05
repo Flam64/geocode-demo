@@ -6,10 +6,10 @@ import Maps from "./Maps";
 
 export default function SearchBar() {
 	const [query, setQuery] = useState("");
-	const [results, setResults] = useState<searchApi[] | null>([]);
+	const [results, setResults] = useState<searchApi[]>([]);
 	const [searchDone, setSearchDone] = useState(false);
-	const [selectedPosition, setSelectedPosition] = useState<searchApi[] | null>(
-		[],
+	const [selectedPosition, setSelectedPosition] = useState<searchApi | null>(
+		null,
 	);
 
 	const handleKeyUp = (event: { key: string }) => {
@@ -34,35 +34,39 @@ export default function SearchBar() {
 		}
 	}, [query, searchDone]);
 
-	// Filtre les données en fonction de l'entrée utilisateur
-	const filterData = (element) => {
-		return results.filter((item) =>
+	// Filter data based on user input
+	const filterData = (element: searchApi) => {
+		return results?.filter((item) =>
 			item.properties.label
 				.toLowerCase()
-				.includes(element.trim().toLowerCase()),
+				.includes(element.properties.label.trim().toLowerCase()),
 		);
 	};
 
 	const handleSearch = (e) => {
 		const value = e.target.value;
+		console.log(value);
 
 		if (searchDone) {
 			setSearchDone(false);
 		} else {
 			setQuery(value);
 			if (value.length > 2) {
-				// Appel à votre API pour récupérer les résultats de recherche
+				// Appel API pour récupérer les résultats de recherche
 				setResults(value.trim() === "" ? [] : filterData(value));
 			}
 		}
 	};
 
 	// Gère le clic sur une suggestion
-	const handleElementClick = (element) => {
-		setQuery(element.properties.label);
-		setResults([]);
-		setSearchDone(true);
-		setSelectedPosition(element.geometry);
+	const handleElementClick = (element: searchApi) => {
+		if (element != null) {
+			setQuery(element.properties.label);
+			setResults([]);
+			setSearchDone(true);
+			// setSelectedPosition(element.geometry);
+			setSelectedPosition(element);
+		}
 	};
 	return (
 		<>

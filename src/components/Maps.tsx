@@ -9,6 +9,7 @@ import {
 	LayerGroup,
 } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import type { searchApi } from "../types/searchApi";
 
 //import { Icon, divIcon, point } from "leaflet";
 import LocationUser from "./LocationUser";
@@ -34,13 +35,24 @@ const markers = [
 
 // [48.8566, 2.3522]
 
-export default function Maps({ selectedPosition }) {
-	const startPoint = {
-		lat: 48.8566,
-		lng: 2.3522,
-	}; // Example: Mumbai
-	const endPoint = { lat: 48.86, lng: 2.3822 }; // Example: Pune
+export default function Maps({
+	selectedPosition,
+}: { selectedPosition: searchApi | null }) {
+	/* const startPoint = {
+		lat: 48.86,
+		lng: 2.3822,
+	};
 
+	if (selectedPosition != null) {
+		const latitude = selectedPosition.geometry.coordinates[1];
+		const longitude = selectedPosition.geometry.coordinates[0];
+
+		startPoint.lat = latitude;
+		startPoint.lng = longitude;
+	}
+
+	const endPoint = { lat: 48.86, lng: 2.3822 };
+ */
 	return (
 		<>
 			<MapContainer center={[48.8566, 2.3522]} zoom={13}>
@@ -48,7 +60,7 @@ export default function Maps({ selectedPosition }) {
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<LayersControl postion="topright">
+				<LayersControl position="topright">
 					<LayersControl.Overlay name="Power Charge">
 						<Marker position={markers[1].geocode}>
 							<Popup>{markers[1].popUp}</Popup>
@@ -62,26 +74,14 @@ export default function Maps({ selectedPosition }) {
 						<Marker position={markers[2].geocode}>
 							<Popup>{markers[2].popUp}</Popup>
 						</Marker>
-
-						{/* 					<Marker
-						position={[
-							selectedItem.coordinates[0],
-							selectedItem.coordinates[1],
-							]}
-							>
-							<Popup>
-							{[selectedItem.coordinates[0], selectedItem.coordinates[1]]}
-							</Popup>
-							</Marker> */}
 					</MarkerClusterGroup>
-
 					<LayersControl.Overlay name="Ma position" checked={true}>
 						<LayerGroup>
 							<LocationUser selectedPosition={selectedPosition} />
 						</LayerGroup>
 					</LayersControl.Overlay>
 				</LayersControl>
-				<Routing start={startPoint} end={endPoint} />
+				{/* <Routing start={startPoint} end={endPoint} /> */}
 			</MapContainer>
 		</>
 	);
