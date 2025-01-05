@@ -60,7 +60,7 @@ export default function Maps({
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<LayersControl position="topright">
+				<LayersControl position="topleft">
 					<LayersControl.Overlay name="Power Charge">
 						<Marker position={markers[1].geocode}>
 							<Popup>{markers[1].popUp}</Popup>
