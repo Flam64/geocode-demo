@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import "./searchBar.css";
 import type { searchApi } from "../types/searchApi";
 
-import Maps from "./Maps";
+//import Maps from "./Maps";
 
-export default function SearchBar() {
+export default function SearchBar({ setSelectedPosition }) {
 	const [query, setQuery] = useState("");
 	const [results, setResults] = useState<searchApi[]>([]);
 	const [searchDone, setSearchDone] = useState(false);
-	const [selectedPosition, setSelectedPosition] = useState<searchApi | null>(
+	/* 	const [selectedPosition, setSelectedPosition] = useState<searchApi | null>(
 		null,
-	);
+	); */
 
 	const handleKeyUp = (event: { key: string }) => {
 		event.key === "Enter";
@@ -34,6 +34,8 @@ export default function SearchBar() {
 		}
 	}, [query, searchDone]);
 
+	console.log(results);
+
 	// Filter data based on user input
 	const filterData = (element: searchApi) => {
 		return results?.filter((item) =>
@@ -45,7 +47,7 @@ export default function SearchBar() {
 
 	const handleSearch = (e) => {
 		const value = e.target.value;
-		console.log(value);
+		console.table(value);
 
 		if (searchDone) {
 			setSearchDone(false);
@@ -91,7 +93,7 @@ export default function SearchBar() {
 						))}
 				</ul>
 			</div>
-			<Maps selectedPosition={selectedPosition} />
+			{/* <Maps selectedPosition={selectedPosition} /> */}
 		</>
 	);
 }

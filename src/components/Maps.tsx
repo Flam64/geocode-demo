@@ -62,7 +62,14 @@ export default function Maps({
 				/>
 				<LayersControl position="topleft">
 					<LayersControl.Overlay name="Power Charge">
-						<Marker position={markers[1].geocode}>
+						<Marker
+							position={markers[1].geocode}
+							eventHandlers={{
+								click: (e) => {
+									console.log(`Click sur le Marker ${e.latlng}`);
+								},
+							}}
+						>
 							<Popup>{markers[1].popUp}</Popup>
 						</Marker>
 					</LayersControl.Overlay>
