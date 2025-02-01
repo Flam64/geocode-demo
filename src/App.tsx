@@ -1,14 +1,17 @@
 //import "./App.css";
 import Maps from "./components/Maps";
 import SearchBar from "./components/SearchBar";
+import { useState } from "react";
+import type { searchApi } from "./types/searchApi";
 
 function App() {
+	const [selectedPosition, setSelectedPosition] = useState<searchApi | null>(
+		null,
+	);
 	return (
 		<>
-			<div className="title_div">
-				<h2>Version de Maps Leaflet pour inclure dans le projet N3</h2>
-			</div>
-			<SearchBar />
+			<SearchBar setSelectedPosition={setSelectedPosition} />
+			<Maps selectedPosition={selectedPosition} />
 		</>
 	);
 }

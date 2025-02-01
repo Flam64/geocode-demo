@@ -21,14 +21,25 @@ export default function LocationUser({
 
 	const map = useMap();
 
-	const LeafIcon = L.Icon.extend({
+	/* const LeafIcon = L.Icon.extend({
 		options: {
 			iconSize: [95, 31],
 			iconAnchor: [45, 45],
 			popupAnchor: [0, -42],
 		},
 	});
-	const carIcon = new LeafIcon({ iconUrl: "../car.png" });
+ */
+
+	const LeafIcon = L.Icon.extend({
+		options: {
+			iconUrl: "../icons8-voiture-64.png",
+			iconSize: [64, 64],
+			iconAnchor: [32, 64],
+			popupAnchor: [0, -42],
+		},
+	});
+
+	const carIcon = new LeafIcon();
 
 	// GPS or automatic position of the web browser
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
