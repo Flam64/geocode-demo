@@ -7,13 +7,19 @@ import {
 	Popup,
 	LayersControl,
 	LayerGroup,
+	MarkerProps,
 } from "react-leaflet";
+// Pour affiocher la modale
+import { useCallback, useState } from "react";
+import { createPortal } from "react-dom";
+
 import MarkerClusterGroup from "react-leaflet-cluster";
 import type { searchApi } from "../types/searchApi";
 
 //import { Icon, divIcon, point } from "leaflet";
 import LocationUser from "./LocationUser";
 import Routing from "./Routing";
+import ModalStation from "./ModalStation";
 
 // create custom icon
 
@@ -38,6 +44,15 @@ const markers = [
 export default function Maps({
 	selectedPosition,
 }: { selectedPosition: searchApi | null }) {
+	const [showModal, setShowModal] = useState(false);
+
+	// detection du click sur un Marker
+
+	const handleClick = useCallback((e) => {
+		console.log("marker clicked", e);
+		setShowModal(true);
+	}, []);
+
 	/* const startPoint = {
 		lat: 48.86,
 		lng: 2.3822,
@@ -55,7 +70,7 @@ export default function Maps({
  */
 	return (
 		<>
-			<MapContainer center={[48.8566, 2.3522]} zoom={13}>
+			<MapContainer center={[48.8566, 2.3522]} zoom={13} zoomControl={false}>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -74,7 +89,10 @@ export default function Maps({
 						</Marker>
 					</LayersControl.Overlay>
 					<MarkerClusterGroup chunkedLoading>
-						<Marker position={markers[0].geocode}>
+						<Marker
+							position={markers[0].geocode}
+							eventHandlers={{ click: handleClick }}
+						>
 							<Popup>{markers[0].popUp}</Popup>
 						</Marker>
 
@@ -89,6 +107,13 @@ export default function Maps({
 					</LayersControl.Overlay>
 				</LayersControl>
 				{/* <Routing start={startPoint} end={endPoint} /> */}
+
+				{/*ajout de la modal */}
+				{showModal &&
+					createPortal(
+						<ModalStation onClose={() => setShowModal(false)} />,
+						document.body,
+					)}
 			</MapContainer>
 		</>
 	);
